@@ -1,15 +1,15 @@
 module HexletCode
   module Tag
-    def self.build(tag, attributes, &block = nil)
+    def self.build(tag, attributes = {}, &block)
       output = ""
       output += tag_opening(tag)
       attributes.each { |name, value| output += tag_attribute(name, value) }
 
-      if block.present?
+      if block.nil?
+        output += tag_self_close
+      else
         output += tag_content(&block)
         output += tag_close(tag)
-      else
-        output += tag_self_close
       end
 
       output
