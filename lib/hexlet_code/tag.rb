@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module HexletCode
   module Tag
     def self.build(tag, attributes = {}, &block)
-      output = ""
+      output = ''
       output += tag_opening(tag)
       attributes.each { |name, value| output += tag_attribute(name, value) }
 
@@ -14,8 +16,6 @@ module HexletCode
 
       output
     end
-
-    private
 
     def self.tag_opening(tag)
       "<#{tag}"
@@ -35,7 +35,7 @@ module HexletCode
     end
 
     def self.tag_self_close
-      " />"
+      ' />'
     end
   end
 end
