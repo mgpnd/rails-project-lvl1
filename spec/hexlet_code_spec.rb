@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# rubocop:disable Metrics/BlockLength
 RSpec.describe HexletCode do
   describe '#form_for' do
     let(:object_struct) { Struct.new(:name, :job, :gender, keyword_init: true) }
@@ -28,3 +31,4 @@ RSpec.describe HexletCode do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

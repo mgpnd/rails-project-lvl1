@@ -18,7 +18,7 @@ module HexletCode
       output << Tag.build('input', type: 'submit', name: 'commit', value: value)
     end
 
-    def select(name, collection, value: nil, **attributes)
+    def select(name, collection: [], value: nil, **attributes)
       Tag.build('select', name: name, options: { multiline: true }, **attributes) do
         collection.map do |opt_value|
           option_attrs = { value: opt_value }
@@ -28,7 +28,7 @@ module HexletCode
       end
     end
 
-    def textarea(name, value, cols: 20, rows: 40, **attributes)
+    def textarea(name, value: nil, cols: 20, rows: 40, **attributes)
       Tag.build(
         'textarea',
         name: name,
@@ -44,18 +44,20 @@ module HexletCode
 
     private
 
-    def input_for(name, as: nil, collection: nil, cols: 20, rows: 40, **attributes)
+    # rubocop:disable Naming/MethodParameterName
+    def input_for(name, as: nil, **attributes)
       value = object.public_send(name)
 
       case as
       when :select
-        select(name, collection, value: value, **attributes)
+        select(name, value: value, **attributes)
       when :text
-        textarea(name, value, cols: cols, rows: rows, **attributes)
+        textarea(name, value: value, **attributes)
       else
         Tag.build('input', type: 'text', name: name, value: value, **attributes)
       end
     end
+    # rubocop:enable Naming/MethodParameterName
 
     def humanize_name(name)
       result = name.to_s.dup
