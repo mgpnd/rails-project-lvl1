@@ -11,10 +11,10 @@ module HexletCode
 
     def input(name, options = {})
       output << Tag.build('label', for: name) { humanize_name(name) }
-      output << input_for(name, options)
+      output << input_for(name, **options)
     end
 
-    def submit(value: 'Save')
+    def submit(value = 'Save')
       output << Tag.build('input', type: 'submit', name: 'commit', value: value)
     end
 
@@ -53,7 +53,7 @@ module HexletCode
       when :text
         textarea(name, value, cols: cols, rows: rows, **attributes)
       else
-        Tag.build('input', type: 'text', name: 'name', value: value, **attributes)
+        Tag.build('input', type: 'text', name: name, value: value, **attributes)
       end
     end
 
