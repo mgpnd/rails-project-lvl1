@@ -11,7 +11,7 @@ AllCops:
 Style/Documentation:
   Enabled: false
 
-Metrics/AbsSize:
+Metrics/AbcSize:
   Enabled: false
 
 Metrics/MethodLength:

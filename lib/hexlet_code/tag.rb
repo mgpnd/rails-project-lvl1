@@ -4,7 +4,7 @@ module HexletCode
   module Tag
     def self.build(tag, attributes = {}, &block)
       options = attributes[:options] || {}
-      multiline = !!options[:multiline]
+      multiline = options[:multiline]
 
       html_keys = attributes.keys.reject { |key| key == :options }
       html_attributes = attributes.slice(*html_keys)
