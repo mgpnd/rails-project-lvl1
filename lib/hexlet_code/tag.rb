@@ -3,14 +3,20 @@
 module HexletCode
   module Tag
     def self.build(tag, attributes = {}, &block)
+      options = attributes[:options] || {}
+      multiline = !!options[:multiline]
+
+      html_keys = attributes.keys.reject { |key| key == :options }
+      html_attributes = attributes.slice(*html_keys)
+
       output = ''
       output += tag_opening(tag)
-      attributes.each { |name, value| output += tag_attribute(name, value) }
+      html_attributes.each { |name, value| output += tag_attribute(name, value) }
 
       if block.nil?
         output += tag_self_close
       else
-        output += tag_content(&block)
+        output += tag_content(multiline: multiline, &block)
         output += tag_close(tag)
       end
 
@@ -25,9 +31,12 @@ module HexletCode
       " #{name}=\"#{value}\""
     end
 
-    def self.tag_content(&block)
+    def self.tag_content(multiline: false, &block)
       content = block.call
-      ">#{content}"
+      '>' \
+      "#{multiline ? "\n  " : ''}" \
+      "#{content}" \
+      "#{multiline ? "\n" : ''}"
     end
 
     def self.tag_close(tag)
