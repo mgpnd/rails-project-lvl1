@@ -5,7 +5,7 @@ RSpec.describe HexletCode do
 
     it 'generates form with provided inputs' do
       form = HexletCode.form_for object do |f|
-        f.input :name
+        f.input :name, class: 'text-input'
         f.input :job, as: :text
         f.input :gender, as: :select, collection: %w[m f]
         f.submit
@@ -14,7 +14,7 @@ RSpec.describe HexletCode do
       expect(form).to eq(<<~FORM.strip)
         <form action="#" method="post">
           <label for="name">Name</label>
-          <input type="text" name="name" value="rob" />
+          <input type="text" name="name" value="rob" class="text-input" />
           <label for="job">Job</label>
           <textarea name="job" cols="20" rows="40">hexlet</textarea>
           <label for="gender">Gender</label>

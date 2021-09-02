@@ -9,31 +9,32 @@ module HexletCode
       @output = []
     end
 
-    def input(name, as: nil, collection: nil)
+    def input(name, options = {})
       output << Tag.build('label', for: name) { humanize_name(name) }
-      output << input_for(name, as: as, collection: collection)
+      output << input_for(name, options)
     end
 
     def submit(value: 'Save')
       output << Tag.build('input', type: 'submit', name: 'commit', value: value)
     end
 
-    def select(name, options, value: nil)
-      Tag.build('select', name: name, options: { multiline: true }) do
-        options.map do |opt_value|
-          attributes = { value: opt_value }
-          attributes[:selected] = true if opt_value == value
-          Tag.build('option', attributes) { opt_value }
+    def select(name, collection, value: nil, **attributes)
+      Tag.build('select', name: name, options: { multiline: true }, **attributes) do
+        collection.map do |opt_value|
+          option_attrs = { value: opt_value }
+          option_attrs[:selected] = true if opt_value == value
+          Tag.build('option', option_attrs) { opt_value }
         end.join("\n")
       end
     end
 
-    def textarea(name, value, cols: 20, rows: 40)
+    def textarea(name, value, cols: 20, rows: 40, **attributes)
       Tag.build(
         'textarea',
         name: name,
         cols: cols,
-        rows: rows
+        rows: rows,
+        **attributes
       ) { value }
     end
 
@@ -43,16 +44,16 @@ module HexletCode
 
     private
 
-    def input_for(name, as: nil, collection: nil)
+    def input_for(name, as: nil, collection: nil, cols: 20, rows: 40, **attributes)
       value = object.public_send(name)
 
       case as
       when :select
-        select(name, collection, value: value)
+        select(name, collection, value: value, **attributes)
       when :text
-        textarea(name, value)
+        textarea(name, value, cols: cols, rows: rows, **attributes)
       else
-        Tag.build('input', type: 'text', name: 'name', value: value)
+        Tag.build('input', type: 'text', name: 'name', value: value, **attributes)
       end
     end
 
