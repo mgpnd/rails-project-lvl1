@@ -7,7 +7,7 @@ module HexletCode
       multiline = options[:multiline]
 
       html_keys = attributes.keys.reject { |key| key == :options }
-      html_attributes = attributes.slice(*html_keys)
+      html_attributes = attributes.slice(*html_keys).reject { |_, value| value.nil? }
 
       output = ''
       output += tag_opening(tag)

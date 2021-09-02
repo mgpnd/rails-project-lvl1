@@ -10,7 +10,12 @@ module HexletCode
     end
 
     def input(name, as: nil, collection: nil)
+      output << Tag.build('label', for: name) { humanize_name(name) }
       output << input_for(name, as: as, collection: collection)
+    end
+
+    def submit(value: 'Save')
+      output << Tag.build('input', type: 'submit', name: 'commit', value: value)
     end
 
     def select(name, options, value: nil)
@@ -49,6 +54,13 @@ module HexletCode
       else
         Tag.build('input', type: 'text', name: 'name', value: value)
       end
+    end
+
+    def humanize_name(name)
+      result = name.to_s.dup
+      result.gsub!(/_id$/, '')
+      result.gsub!(/_/, ' ')
+      result.gsub!(/^\w/) { Regexp.last_match(0).upcase }
     end
   end
 end
