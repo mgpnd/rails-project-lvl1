@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# rubocop:disable Metrics/BlockLength
 RSpec.describe HexletCode::Tag do
   describe '#build' do
     context 'when no attributes and content provided' do
@@ -37,3 +40,4 @@ RSpec.describe HexletCode::Tag do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength
