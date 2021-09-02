@@ -28,15 +28,26 @@ module HexletCode
     end
 
     def self.tag_attribute(name, value)
+      return " #{name}" if value == true
+
       " #{name}=\"#{value}\""
     end
 
     def self.tag_content(multiline: false, &block)
       content = block.call
-      '>' \
-      "#{multiline ? "\n  " : ''}" \
-      "#{content}" \
-      "#{multiline ? "\n" : ''}"
+      output = '>'
+
+      if multiline
+        output += "\n"
+        output += content.split("\n")
+                         .map { |line| "  #{line}" }
+                         .join("\n")
+        output += "\n"
+      else
+        output += content
+      end
+
+      output
     end
 
     def self.tag_close(tag)
