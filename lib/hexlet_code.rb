@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'hexlet_code/version'
+require_relative 'hexlet_code/serializers'
 require_relative 'hexlet_code/tag'
 require_relative 'hexlet_code/form'
 
@@ -13,8 +14,13 @@ module HexletCode
 
     action = url.nil? ? '#' : url
 
-    Tag.build('form', action: action, method: 'post', options: { multiline: true }) do
-      form.to_s
-    end
+    form_tag = Tag.new(
+      'form',
+      action: action,
+      method: 'post',
+      options: { multiline: true }
+    )
+    form_tag.content = form.output
+    Serializers::Html.serialize(form_tag)
   end
 end
