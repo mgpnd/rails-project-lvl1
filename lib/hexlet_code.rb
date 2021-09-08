@@ -2,7 +2,9 @@
 
 require_relative 'hexlet_code/version'
 require_relative 'hexlet_code/serializers'
+require_relative 'hexlet_code/configuration'
 require_relative 'hexlet_code/tag'
+require_relative 'hexlet_code/form_inputs'
 require_relative 'hexlet_code/form'
 
 module HexletCode
@@ -21,6 +23,14 @@ module HexletCode
       options: { multiline: true }
     )
     form_tag.content = form.output
-    Serializers::Html.serialize(form_tag)
+    config.default_serializer.serialize(form_tag)
+  end
+
+  def self.config
+    @config ||= Configuration.new
+  end
+
+  def self.configure
+    yield config
   end
 end

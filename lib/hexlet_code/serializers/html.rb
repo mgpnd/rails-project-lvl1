@@ -2,8 +2,8 @@
 
 module HexletCode
   module Serializers
-    module Html
-      def self.serialize(tag_instance)
+    class Html
+      def serialize(tag_instance)
         output = tag_opening(tag_instance.tag)
         output += tag_attributes(tag_instance)
         return output + tag_self_close if tag_instance.content.empty?
@@ -19,23 +19,25 @@ module HexletCode
         output
       end
 
-      def self.tag_opening(tag)
+      private
+
+      def tag_opening(tag)
         "<#{tag}"
       end
 
-      def self.tag_attributes(tag_instance)
+      def tag_attributes(tag_instance)
         tag_instance
           .attributes
           .reduce('') { |output, (name, value)| output + tag_attribute(name, value) }
       end
 
-      def self.tag_attribute(name, value)
+      def tag_attribute(name, value)
         return " #{name}" if value == true
 
         " #{name}=\"#{value}\""
       end
 
-      def self.tag_multiline_content(content)
+      def tag_multiline_content(content)
         output = '>'
         output += "\n"
 
@@ -43,7 +45,8 @@ module HexletCode
           output +=
             case child
             when HexletCode::Tag
-              Serializers::Html.serialize(child)
+              Serializers::Html.new
+                               .serialize(child)
                                .split("\n")
                                .map { |line| "  #{line}" }
                                .join("\n")
@@ -58,14 +61,14 @@ module HexletCode
         output
       end
 
-      def self.tag_content(content)
+      def tag_content(content)
         output = '>'
 
-        content.each do |child|
+        content.compact.each do |child|
           output +=
             case child
             when HexletCode::Tag
-              Serializers::Html.serialize(child)
+              Serializers::Html.new.serialize(child)
             else
               child
             end
@@ -74,11 +77,11 @@ module HexletCode
         output
       end
 
-      def self.tag_close(tag)
+      def tag_close(tag)
         "</#{tag}>"
       end
 
-      def self.tag_self_close
+      def tag_self_close
         ' />'
       end
     end

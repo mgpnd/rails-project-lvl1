@@ -7,7 +7,7 @@ module HexletCode
 
     def self.build(tag, attributes = {}, &block)
       tag = new(tag, attributes, &block)
-      HexletCode::Serializers::Html.serialize(tag)
+      HexletCode.config.default_serializer.serialize(tag)
     end
 
     def initialize(tag, attributes = {})
