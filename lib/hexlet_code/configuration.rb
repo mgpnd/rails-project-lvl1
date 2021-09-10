@@ -2,10 +2,11 @@
 
 module HexletCode
   class Configuration
-    attr_accessor :default_serializer
+    attr_accessor :serializer, :form_builder
 
     def initialize
-      @default_serializer = Serializers::Html.new
+      @serializer = Serializers::Html.new
+      @form_builder = FormBuilder.new
     end
   end
 end
