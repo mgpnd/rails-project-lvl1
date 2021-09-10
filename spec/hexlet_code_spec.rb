@@ -29,6 +29,14 @@ RSpec.describe HexletCode do
         </form>
       FORM
     end
+
+    context 'when block is not passed' do
+      it 'raises an error' do
+        expect {
+          HexletCode.form_for(object)
+        }.to raise_error(HexletCode::Error)
+      end
+    end
   end
 end
 # rubocop:enable Metrics/BlockLength

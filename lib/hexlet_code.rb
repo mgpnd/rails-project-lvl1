@@ -11,6 +11,8 @@ module HexletCode
   autoload :Serializers, 'hexlet_code/serializers'
 
   def self.form_for(object, url: nil)
+    (raise Error, 'Missing block in HexletCode.form_for') unless block_given?
+
     form = Form.new(object)
     yield form
 
