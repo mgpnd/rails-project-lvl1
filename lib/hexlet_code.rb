@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 require_relative 'hexlet_code/version'
-require_relative 'hexlet_code/serializers'
-require_relative 'hexlet_code/configuration'
-require_relative 'hexlet_code/tag'
-require_relative 'hexlet_code/form_inputs'
-require_relative 'hexlet_code/form'
 
 module HexletCode
-  class Error < StandardError; end
+  autoload :Configuration, 'hexlet_code/configuration'
+  autoload :Error, 'hexlet_code/error'
+  autoload :Form, 'hexlet_code/form'
+  autoload :FormInputs, 'hexlet_code/form_inputs'
+  autoload :Tag, 'hexlet_code/tag'
+  autoload :Serializers, 'hexlet_code/serializers'
 
   def self.form_for(object, url: nil)
     form = Form.new(object)

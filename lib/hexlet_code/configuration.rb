@@ -5,7 +5,7 @@ module HexletCode
     attr_accessor :default_serializer
 
     def initialize
-      @default_serializer = HexletCode::Serializers::Html.new
+      @default_serializer = Serializers::Html.new
     end
   end
 end

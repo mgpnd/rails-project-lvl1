@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require_relative 'serializers/html'
-
-module Serializers
+module HexletCode
+  module Serializers
+    autoload :Html, 'hexlet_code/serializers/html'
+  end
 end

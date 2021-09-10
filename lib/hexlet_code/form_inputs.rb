@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require_relative 'form_inputs/base'
-require_relative 'form_inputs/input'
-require_relative 'form_inputs/select'
-require_relative 'form_inputs/textarea'
-
 module HexletCode
   module FormInputs
+    autoload :Base, 'hexlet_code/form_inputs/base'
+    autoload :Input, 'hexlet_code/form_inputs/input'
+    autoload :Select, 'hexlet_code/form_inputs/select'
+    autoload :Textarea, 'hexlet_code/form_inputs/textarea'
+
     INPUTS_MAP = {
       select: FormInputs::Select,
       text: FormInputs::Textarea
